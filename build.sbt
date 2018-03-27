@@ -34,6 +34,19 @@ lazy val testActor = (project in file ("testActor"))
   )
   .dependsOn(common)
 
+lazy val testPlay = (project in file ("testPlay")).enablePlugins(PlayJava)
+  .settings(
+    inThisBuild(
+      commonSettings
+    ),
+    assemblyJarName in assembly := "testPlay.jar",
+    assemblySettings,
+    name := "testPlay",
+    libraryDependencies ++= commonLibs,
+    libraryDependencies += guice
+  )
+  .dependsOn(common)
+
 lazy val root = (project in file("."))
   .aggregate(testActor, common)
 
