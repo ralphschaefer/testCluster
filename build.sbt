@@ -32,6 +32,7 @@ lazy val testActor = (project in file ("testActor"))
     name := "testActor",
     libraryDependencies ++= commonLibs
   )
+  .dependsOn(common)
 
 lazy val root = (project in file("."))
   .aggregate(testActor, common)
