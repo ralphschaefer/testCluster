@@ -6,6 +6,7 @@ import org.junit.*;
 
 import test.emnify.app.AkkaTestGlobals;
 import test.emnify.common.actors.Sender;
+import test.emnify.common.messages.EchoMessage;
 
 public class SenderTest {
 
@@ -28,7 +29,7 @@ public class SenderTest {
         new TestKit(globals.getSystem()) {{
             ActorRef probe = getTestActor();
             ActorRef sender = getSystem().actorOf(Sender.props(probe), "sender2");
-            Echo.EchoMessage m = new Echo.EchoMessage("MSG");
+            EchoMessage m = new EchoMessage("MSG");
             sender.tell(m, probe);
             expectMsg(m);
         } };
@@ -36,7 +37,7 @@ public class SenderTest {
 
     @Test
     public void testSenderActor() {
-        globals.getSenderActor().tell(new Echo.EchoMessage("testSender"), globals.getTestKit().testActor());
+        globals.getSenderActor().tell(new EchoMessage("testSender"), globals.getTestKit().testActor());
         globals.getTestKit().expectNoMsg();
     }
 

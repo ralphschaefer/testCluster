@@ -3,6 +3,7 @@ package test.emnify.app.actors;
 import org.junit.*;
 
 import test.emnify.app.AkkaTestGlobals;
+import test.emnify.common.messages.EchoMessage;
 
 public class EchoTest {
 
@@ -21,7 +22,7 @@ public class EchoTest {
 
     @Test
     public void testEchoActor() {
-        globals.getEchoActor().tell(new Echo.EchoMessage("test"),globals.getTestKit().testActor());
+        globals.getEchoActor().tell(new EchoMessage("test"),globals.getTestKit().testActor());
         globals.getTestKit().expectNoMsg();
     }
 
