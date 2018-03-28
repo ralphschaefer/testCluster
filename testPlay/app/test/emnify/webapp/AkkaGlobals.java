@@ -14,14 +14,6 @@ import test.emnify.common.actors.Sender;
  */
 public class AkkaGlobals implements AbstractGlobals {
 
-    private ActorSystem playSystem = null;
-    public ActorSystem getPlaySystem() { return playSystem; }
-    public void setPlaySystem(ActorSystem playSystem) { this.playSystem = playSystem; }
-
-    private Materializer playMaterializer = null;
-    public Materializer getPlayMaterializer() { return playMaterializer; }
-    public void setPlayMaterializer(Materializer playMaterializer) { this.playMaterializer = playMaterializer; }
-
     private ActorSystem system =  null;
 
     private ActorRef router = null;
@@ -37,8 +29,6 @@ public class AkkaGlobals implements AbstractGlobals {
     public ActorRef getSenderActor() {
         return senderActor;
     }
-
-    public ActorRef getEchoActor() { return echoActor; }
 
     private AkkaGlobals() {
         try {

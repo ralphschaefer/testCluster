@@ -1,7 +1,6 @@
 package actors;
 
 import akka.actor.*;
-import test.emnify.common.messages.EchoMessage;
 import test.emnify.webapp.AkkaGlobals;
 import test.emnify.webapp.messages.Message;
 

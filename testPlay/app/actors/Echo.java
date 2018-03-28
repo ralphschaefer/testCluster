@@ -34,7 +34,7 @@ public class Echo extends AbstractActor {
                 match(MemberUp.class, mUp -> {
                 })
                 .match(EchoMessage.class, e-> {
-                    System.out.println("(" + getSender().toString() + ") -> " + e.getMsg());
+                    // System.out.println("(" + getSender().toString() + ") -> " + e.getMsg());
                     MessageWithSource m = Message.build(e.getMsg()).withSource(getSender().toString());
                     for (ActorRef ws: WebSocketActor.allWSs)
                         ws.tell(m.apply(),self());

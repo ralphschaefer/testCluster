@@ -5,6 +5,8 @@
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.index
 
+GET     /testws                     controllers.HomeController.testWebsocket
+
 GET     /response                   controllers.TestController.res
 
 POST    /send                       controllers.SendToCluster.handleSendRequest

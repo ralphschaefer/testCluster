@@ -1,6 +1,5 @@
 package test.emnify.webapp.messages;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import play.libs.Json;
 
 public class MessageWithSource {
