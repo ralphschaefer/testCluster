@@ -7,18 +7,22 @@ import play.libs.streams.ActorFlow;
 import play.mvc.*;
 import akka.actor.*;
 import akka.stream.*;
+import test.emnify.webapp.AkkaGlobals;
+
 import javax.inject.Inject;
 
 public class WebsocketController extends Controller {
 
     private final ActorSystem actorSystem;
     private final Materializer materializer;
+    private final AkkaGlobals clusterAkkaArtifacts;
     private Boolean hasSubscription = false;
 
     @Inject
-    public WebsocketController(ActorSystem actorSystem, Materializer materializer) {
+    public WebsocketController(ActorSystem actorSystem, Materializer materializer, AkkaGlobals globals ) {
         this.actorSystem = actorSystem;
         this.materializer = materializer;
+        this.clusterAkkaArtifacts = globals;
     }
 
     public WebSocket socket() {

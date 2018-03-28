@@ -6,12 +6,13 @@ import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.CoordinatedShutdown;
 import akka.routing.FromConfig;
-import akka.stream.Materializer;
 import test.emnify.common.actors.Sender;
+import javax.inject.*;
 
 /**
  * Akka artifacts
  */
+@Singleton
 public class AkkaGlobals implements AbstractGlobals {
 
     private ActorSystem system =  null;
@@ -30,7 +31,13 @@ public class AkkaGlobals implements AbstractGlobals {
         return senderActor;
     }
 
-    private AkkaGlobals() {
+    public void stop() {
+        System.out.println("Akka shutdown");
+        CoordinatedShutdown.get(system).run();
+    }
+
+    @Inject
+    public AkkaGlobals() {
         try {
             System.out.println("Akka Startup");
             system = ActorSystem.create("testSystem");
@@ -47,11 +54,16 @@ public class AkkaGlobals implements AbstractGlobals {
     static private AkkaGlobals instance = null;
 
     static public AkkaGlobals getInstance() {
+        // disable
+        return null;
+        /*
         if (instance == null)
             instance = new AkkaGlobals();
         return instance;
+        */
     }
 
+    /*
     static public void stopInstance() {
         if (instance != null) {
             System.out.println("Akka shutdown");
@@ -59,4 +71,5 @@ public class AkkaGlobals implements AbstractGlobals {
             instance = null;
         }
     }
+    */
 }
