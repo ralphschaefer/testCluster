@@ -15,9 +15,7 @@ public class OnStartup {
     public void OnStartup(ApplicationLifecycle appLifecycle, AkkaGlobals akkaGlobals) {
         System.out.println("Startup Play Framework");
 
-        // AkkaGlobals.getInstance();
         appLifecycle.addStopHook(() -> {
-            // AkkaGlobals.stopInstance();
             akkaGlobals.stop();
             System.out.println("Stop Play Framework");
             return CompletableFuture.completedFuture(null);

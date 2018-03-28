@@ -15,19 +15,21 @@ public class WebsocketController extends Controller {
 
     private final ActorSystem actorSystem;
     private final Materializer materializer;
-    // private final AkkaGlobals clusterAkkaArtifacts;
+    private final AkkaGlobals clusterAkkaArtifacts;
     private Boolean hasSubscription = false;
 
     @Inject
     public WebsocketController(ActorSystem actorSystem, Materializer materializer, AkkaGlobals globals ) {
         this.actorSystem = actorSystem;
         this.materializer = materializer;
-        AkkaGlobals.setInstance(globals);
+        this.clusterAkkaArtifacts = globals;
     }
 
     public WebSocket socket() {
         WebSocket ws =  WebSocket.Text.accept(request ->
-                ActorFlow.actorRef(WebSocketActor::props, actorSystem, materializer)
+                ActorFlow.actorRef(o -> {
+                        return WebSocketActor.props(o,this.clusterAkkaArtifacts);
+                    }, actorSystem, materializer)
         );
         this.hasSubscription = true;
         return ws;
