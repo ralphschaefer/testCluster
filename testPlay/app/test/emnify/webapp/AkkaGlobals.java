@@ -1,10 +1,12 @@
 package test.emnify.webapp;
 
 
+import actors.Echo;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.CoordinatedShutdown;
 import akka.routing.FromConfig;
+import akka.stream.Materializer;
 import test.emnify.common.actors.Sender;
 
 /**
@@ -12,9 +14,19 @@ import test.emnify.common.actors.Sender;
  */
 public class AkkaGlobals implements AbstractGlobals {
 
+    private ActorSystem playSystem = null;
+    public ActorSystem getPlaySystem() { return playSystem; }
+    public void setPlaySystem(ActorSystem playSystem) { this.playSystem = playSystem; }
+
+    private Materializer playMaterializer = null;
+    public Materializer getPlayMaterializer() { return playMaterializer; }
+    public void setPlayMaterializer(Materializer playMaterializer) { this.playMaterializer = playMaterializer; }
+
     private ActorSystem system =  null;
 
     private ActorRef router = null;
+
+    private ActorRef echoActor = null;
 
     private ActorRef senderActor = null;
 
@@ -26,12 +38,16 @@ public class AkkaGlobals implements AbstractGlobals {
         return senderActor;
     }
 
+    public ActorRef getEchoActor() { return echoActor; }
+
     private AkkaGlobals() {
         try {
             System.out.println("Akka Startup");
             system = ActorSystem.create("testSystem");
+            echoActor = system.actorOf(Echo.props(), "echo");
             router = system.actorOf(FromConfig.getInstance().props(), "echoRoute");
             senderActor = system.actorOf(Sender.props(router), "sender");
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.exit(-1);

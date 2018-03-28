@@ -9,7 +9,9 @@ GET     /response                   controllers.TestController.res
 
 POST    /send                       controllers.SendToCluster.handleSendRequest
 
-GET     /listener                   controllers.WebsocketController.socket
+GET     /listen                     controllers.WebsocketController.socket
+
+GET     /hasListeners               controllers.WebsocketController.activeSubscription
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

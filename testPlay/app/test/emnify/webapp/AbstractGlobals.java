@@ -9,6 +9,7 @@ import akka.actor.ActorSystem;
 public interface AbstractGlobals {
 
     ActorSystem getSystem();
+    ActorRef getEchoActor();
     ActorRef getSenderActor();
 
 }

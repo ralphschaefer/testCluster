@@ -47,9 +47,7 @@ public class SendToCluster extends Controller {
                 return badRequest("no valid Json");
             Message msg = Message.apply(json);
 
-            // TODO send message to Actor
             AkkaGlobals.getInstance().getSenderActor().tell(msg.toAkkaMessage(), ActorRef.noSender());
-
             return ok(msg.copy().apply());
         } catch (Message.MessageException e) {
             return badRequest(e.getMessage());
