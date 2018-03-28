@@ -15,14 +15,14 @@ public class WebsocketController extends Controller {
 
     private final ActorSystem actorSystem;
     private final Materializer materializer;
-    private final AkkaGlobals clusterAkkaArtifacts;
+    // private final AkkaGlobals clusterAkkaArtifacts;
     private Boolean hasSubscription = false;
 
     @Inject
     public WebsocketController(ActorSystem actorSystem, Materializer materializer, AkkaGlobals globals ) {
         this.actorSystem = actorSystem;
         this.materializer = materializer;
-        this.clusterAkkaArtifacts = globals;
+        AkkaGlobals.setInstance(globals);
     }
 
     public WebSocket socket() {

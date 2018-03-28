@@ -15,17 +15,17 @@ public class WebSocketActor extends AbstractActor {
     public static ArrayList<ActorRef> allWSs = new ArrayList<ActorRef>();
 
 
-    public static Props props(ActorRef out, AkkaGlobals akkaGlobals) {
+    public static Props props(ActorRef out) {
         WebSocketActor.allWSs.add(out);
-        return Props.create(WebSocketActor.class, out, akkaGlobals);
+        return Props.create(WebSocketActor.class, out);
     }
 
     private final ActorRef out;
 
     // @Inject
-    public WebSocketActor(ActorRef out, AkkaGlobals akkaGlobals) {
-        this.akkaGlobals = akkaGlobals;
+    public WebSocketActor(ActorRef out) {
         this.out = out;
+        akkaGlobals = AkkaGlobals.getInstance();
     }
 
     @Override

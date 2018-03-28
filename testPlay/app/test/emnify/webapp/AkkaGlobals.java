@@ -55,7 +55,7 @@ public class AkkaGlobals implements AbstractGlobals {
 
     static public AkkaGlobals getInstance() {
         // disable
-        return null;
+        return instance;
         /*
         if (instance == null)
             instance = new AkkaGlobals();
@@ -63,6 +63,9 @@ public class AkkaGlobals implements AbstractGlobals {
         */
     }
 
+    static public void setInstance(AkkaGlobals akkaGlobals) {
+        instance = akkaGlobals;
+    }
     /*
     static public void stopInstance() {
         if (instance != null) {
