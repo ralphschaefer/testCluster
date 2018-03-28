@@ -15,17 +15,13 @@
 
 			var webSocket;
 
-			jQuery.get("/hasListeners", function(data) {
-				if (! data.hasSubscription) {
-					webSocket = new WebSocket("ws://localhost:9000/listen");
-					webSocket.onopen = function(message) { processOpen(message); };
-					webSocket.onclose = function(message) { processClose(message); };
-					webSocket.onerror = function(message) { processError(message); };
-					webSocket.onmessage = function(message) { processMessage(message); };
-					console.log("websocket connected");
-				}
-				else console.log("websocket not connected (used by an other client)");
-			});
+			host = location.hostname+(location.port ? ':'+location.port: '');
+			webSocket = new WebSocket("ws://" + host + "/listen");
+			webSocket.onopen = function(message) { processOpen(message); };
+			webSocket.onclose = function(message) { processClose(message); };
+			webSocket.onerror = function(message) { processError(message); };
+			webSocket.onmessage = function(message) { processMessage(message); };
+			console.log("websocket connected");
 
 			var messagesTextArea = document.getElementById("messagesTextArea");
 
@@ -48,7 +44,7 @@
 			}
 
 			function processMessage(message){
-				messagesTextArea.value += message.data + "\n" + "____________________________\n\n";
+				messagesTextArea.value += JSON.stringify(JSON.parse(message.data), null, 2) + "\n" + "____________________________\n\n";
 				messagesTextArea.scrollTop = messagesTextArea.scrollHeight
 			}
 
@@ -58,7 +54,7 @@
 				document.getElementById("msg").value = "";
 
 				var msgObject = {
-					msg: msg
+					message: msg
 				};
 
 				webSocket.send(JSON.stringify(msgObject));

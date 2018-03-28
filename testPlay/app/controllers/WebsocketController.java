@@ -1,9 +1,7 @@
 package controllers;
 
 import actors.WebSocketActor;
-import akka.stream.javadsl.Flow;
 import com.fasterxml.jackson.databind.JsonNode;
-import play.http.websocket.Message;
 import play.libs.Json;
 import play.libs.streams.ActorFlow;
 import play.mvc.*;
@@ -15,18 +13,18 @@ public class WebsocketController extends Controller {
 
     private final ActorSystem actorSystem;
     private final Materializer materializer;
-    private final Flow<String,String, ?> actor;
     private Boolean hasSubscription = false;
 
     @Inject
     public WebsocketController(ActorSystem actorSystem, Materializer materializer) {
         this.actorSystem = actorSystem;
         this.materializer = materializer;
-        this.actor = ActorFlow.actorRef(WebSocketActor::props, actorSystem, materializer);
     }
 
     public WebSocket socket() {
-        WebSocket ws =  WebSocket.Text.accept(request -> actor);
+        WebSocket ws =  WebSocket.Text.accept(request ->
+                ActorFlow.actorRef(WebSocketActor::props, actorSystem, materializer)
+        );
         this.hasSubscription = true;
         return ws;
     }

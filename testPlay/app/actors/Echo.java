@@ -8,9 +8,9 @@ import akka.cluster.ClusterEvent;
 import akka.cluster.ClusterEvent.MemberEvent;
 import akka.cluster.ClusterEvent.UnreachableMember;
 import akka.cluster.ClusterEvent.MemberUp;
-import play.libs.streams.ActorFlow;
 import test.emnify.common.messages.EchoMessage;
-import test.emnify.webapp.AkkaGlobals;
+import test.emnify.webapp.messages.Message;
+import test.emnify.webapp.messages.MessageWithSource;
 
 public class Echo extends AbstractActor {
 
@@ -35,8 +35,9 @@ public class Echo extends AbstractActor {
                 })
                 .match(EchoMessage.class, e-> {
                     System.out.println("(" + getSender().toString() + ") -> " + e.getMsg());
-                    if (WebSocketActor.currentout != null)
-                        WebSocketActor.currentout.tell("(" + getSender().toString() + ") -> " + e.getMsg(),self());
+                    MessageWithSource m = Message.build(e.getMsg()).withSource(getSender().toString());
+                    for (ActorRef ws: WebSocketActor.allWSs)
+                        ws.tell(m.apply(),self());
                 }).build();
 
     }
