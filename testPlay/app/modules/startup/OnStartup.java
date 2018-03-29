@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture;
 public class OnStartup {
 
     @Inject
-    public void OnStartup(ApplicationLifecycle appLifecycle, AkkaGlobals akkaGlobals) {
+    public void OnStartup(ApplicationLifecycle appLifecycle, AbstractGlobals akkaGlobals) {
         System.out.println("Startup Play Framework");
 
         appLifecycle.addStopHook(() -> {

@@ -7,7 +7,7 @@ public class ExternalGlobalsModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(AkkaGlobals.class).asEagerSingleton();
+        bind(AbstractGlobals.class).to(AkkaGlobals.class);
     }
 
 }

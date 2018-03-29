@@ -7,8 +7,6 @@ GET     /                           controllers.HomeController.index
 
 GET     /testws                     controllers.HomeController.testWebsocket
 
-GET     /response                   controllers.TestController.res
-
 POST    /send                       controllers.SendToCluster.handleSendRequest
 
 GET     /listen                     controllers.WebsocketController.socket

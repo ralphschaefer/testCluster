@@ -8,6 +8,7 @@ import akka.actor.CoordinatedShutdown;
 import akka.routing.FromConfig;
 import test.emnify.common.actors.Sender;
 import javax.inject.*;
+import test.emnify.common.messages.EchoMessage;
 
 /**
  * Akka artifacts
@@ -23,12 +24,9 @@ public class AkkaGlobals implements AbstractGlobals {
 
     private ActorRef senderActor = null;
 
-    public ActorSystem getSystem() {
-        return system;
-    }
-
-    public ActorRef getSenderActor() {
-        return senderActor;
+    public void sendMesssage(EchoMessage msg, ActorRef sender) {
+        if (senderActor != null)
+            senderActor.tell(msg, sender);
     }
 
     public void stop() {

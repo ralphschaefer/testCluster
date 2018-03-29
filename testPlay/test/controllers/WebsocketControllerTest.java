@@ -1,5 +1,7 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Assert;
 import org.junit.Test;
 import play.Application;
 import play.inject.guice.GuiceApplicationBuilder;
@@ -13,8 +15,9 @@ import static org.junit.Assert.assertEquals;
 import static play.mvc.Http.Status.OK;
 import static play.test.Helpers.GET;
 import static play.test.Helpers.route;
+import static play.test.Helpers.*;
 
-public class HomeControllerTest extends WithApplication {
+public class WebsocketControllerTest extends WithApplication {
 
     @Override
     protected Application provideApplication() {
@@ -24,13 +27,19 @@ public class HomeControllerTest extends WithApplication {
     }
 
     @Test
-    public void testIndex() {
+    public void queryWSStatus() throws Exception {
+
+        ObjectMapper mapper = new ObjectMapper();
+
         Http.RequestBuilder request = new Http.RequestBuilder()
                 .method(GET)
-                .uri("/");
-
+                .uri("/hasListeners");
         Result result = route(app, request);
         assertEquals(OK, result.status());
+        assertEquals("application/json", result.contentType().get());
+        Boolean subscription = mapper.readTree(contentAsString(result)).get("hasSubscription").asBoolean();
+
+        Assert.assertFalse("ws schoud have no subscriptions", subscription);
     }
 
 }

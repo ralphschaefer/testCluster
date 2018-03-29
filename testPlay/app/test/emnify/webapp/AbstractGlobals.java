@@ -1,15 +1,12 @@
 package test.emnify.webapp;
 
 import akka.actor.ActorRef;
-import akka.actor.ActorSystem;
+import test.emnify.common.messages.EchoMessage;
 
-/**
- * interface for Akka artifacts, used for DI
- */
 public interface AbstractGlobals {
 
-    ActorSystem getSystem();
-    ActorRef getSenderActor();
+    void sendMesssage(EchoMessage msg, ActorRef sender);
 
+    void stop();
 }
 
