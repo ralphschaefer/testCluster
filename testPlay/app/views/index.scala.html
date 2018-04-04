@@ -1,6 +1,51 @@
 @()
 
 @main("Welcome to Play") {
-  <h1>Welcome to Play!</h1>
-  <a href="/testws">Test</a>
+  <script>
+    host = location.hostname+(location.port ? ':'+location.port : '');
+  </script>
+
+  <h1>test cluster</h1>
+
+  <div class="box">
+  <a href="/testws">Test Websocket</a>
+  </div>
+
+  <div class="box">
+    <input  id="sendItem" type="text"/>
+    <button id="doSend" type="button">Send to Cluster</button>
+    <span   id="resultSend">***</span>
+    <script>
+      jQuery("#doSend").click( function () {
+        var item=jQuery("#sendItem").val();
+        jQuery.ajax({
+          url:"http://"+host+"/send",
+          type:"POST",
+          data:JSON.stringify({"message": item}),
+          contentType:"application/json; charset=utf-8",
+          dataType:"json",
+          success: function(data){
+            jQuery("#resultSend").text(JSON.stringify(data));
+          }
+        });
+      });
+    </script>
+  </div>
+  <div class="box">
+    <button id="queryWebsocket" type="button">query websocket Backend</button>
+    <span   id="resultWebsocket">***</span>
+    <script>
+      jQuery("#queryWebsocket").click( function () {
+        jQuery.ajax({
+          url:"http://"+host+"/hasListeners",
+          type:"GET",
+          dataType:"json",
+          success: function(data){
+            jQuery("#resultWebsocket").text(JSON.stringify(data));
+          }
+        });
+      });
+    </script>
+  </div>
+
 }

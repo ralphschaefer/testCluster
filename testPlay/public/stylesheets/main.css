@@ -3,10 +3,17 @@ html {
     font-size: 1em;
     line-height: 1.4;
     padding-left: 10px;
-    passing-right: 10px;
+    padding-right: 10px;
     font-family: Helvetica, Sans-Serif;
 }
-
+.box{
+    padding-left:   10px;
+    padding-right:  10px;
+    padding-top:    10px;
+    padding-bottom: 10px;
+    margin-bottom:  20px;
+    border: 1px solid black;
+}
 .messagebox {
     border: 2 solid black;
     overflow: hidden;
